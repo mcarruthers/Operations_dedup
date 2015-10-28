@@ -1,0 +1,500 @@
+[
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Call number using expression grel:substring(value, 3)",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "Call number",
+    "expression": "grel:substring(value, 3)",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Call number using expression value.trim()",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "Call number",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column Diff at index 13 based on column Creation date using expression grel:diff(value.toDate(), now().toDate(), \"days\")",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "Diff",
+    "columnInsertIndex": 13,
+    "baseColumnName": "Creation date",
+    "expression": "grel:diff(value.toDate(), now().toDate(), \"days\")",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column Diff facet at index 14 based on column Diff using expression grel:if(value > -1825, 'true', 'false')",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "Diff facet",
+    "columnInsertIndex": 14,
+    "baseColumnName": "Diff",
+    "expression": "grel:if(value > -1825, 'true', 'false')",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/row-removal",
+    "description": "Remove rows",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "value",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": "true",
+                "l": "true"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Diff facet",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Diff facet"
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column Return diff at index 16 based on column Date last returned using expression grel:diff(value.toDate(), now().toDate(), \"days\")",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "isBlank(value)",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": false,
+                "l": "false"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Date last returned",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Date last returned"
+        }
+      ]
+    },
+    "newColumnName": "Return diff",
+    "columnInsertIndex": 16,
+    "baseColumnName": "Date last returned",
+    "expression": "grel:diff(value.toDate(), now().toDate(), \"days\")",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column Return facet at index 17 based on column Return diff using expression grel:if(value > -1825, 'true', 'false')",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "isBlank(value)",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": false,
+                "l": "false"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Date last returned",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Date last returned"
+        }
+      ]
+    },
+    "newColumnName": "Return facet",
+    "columnInsertIndex": 17,
+    "baseColumnName": "Return diff",
+    "expression": "grel:if(value > -1825, 'true', 'false')",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Number of loans since 1988 using expression value.toNumber()",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "isBlank(value)",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": false,
+                "l": "false"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Date last returned",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Date last returned"
+        },
+        {
+          "omitError": false,
+          "expression": "value",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": "true",
+                "l": "true"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Return facet",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Return facet"
+        }
+      ]
+    },
+    "columnName": "Number of loans since 1988",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column Loan facet at index 10 based on column Number of loans since 1988 using expression grel:if(value > 5, 'true', 'false')",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "isBlank(value)",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": false,
+                "l": "false"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Date last returned",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Date last returned"
+        },
+        {
+          "omitError": false,
+          "expression": "value",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": "true",
+                "l": "true"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Return facet",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Return facet"
+        }
+      ]
+    },
+    "newColumnName": "Loan facet",
+    "columnInsertIndex": 10,
+    "baseColumnName": "Number of loans since 1988",
+    "expression": "grel:if(value > 5, 'true', 'false')",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/row-removal",
+    "description": "Remove rows",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "isBlank(value)",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": false,
+                "l": "false"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Date last returned",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Date last returned"
+        },
+        {
+          "omitError": false,
+          "expression": "value",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": "true",
+                "l": "true"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Return facet",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Return facet"
+        },
+        {
+          "omitError": false,
+          "expression": "value",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": "true",
+                "l": "true"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Loan facet",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Loan facet"
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Loan facet",
+    "columnName": "Loan facet"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Diff facet",
+    "columnName": "Diff facet"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Diff",
+    "columnName": "Diff"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Return diff",
+    "columnName": "Return diff"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Return facet",
+    "columnName": "Return facet"
+  },
+  {
+    "op": "core/row-removal",
+    "description": "Remove rows",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "isBlank(value)",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": false,
+                "l": "false"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Item process status",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Item process status"
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/row-removal",
+    "description": "Remove rows",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "grel:startsWith(value, 'c')",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": false,
+                "l": "false"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Description (volume/enumcron)",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Description (volume/enumcron)"
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/row-removal",
+    "description": "Remove rows",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "grel:startsWith(value, 'B')",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": true,
+                "l": "true"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Barcode",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Barcode"
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/row-removal",
+    "description": "Remove rows",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "grel:value.contains('08')",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": true,
+                "l": "true"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Item status",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Item status"
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/row-reorder",
+    "description": "Reorder rows",
+    "mode": "record-based",
+    "sorting": {
+      "criteria": [
+        {
+          "errorPosition": 1,
+          "caseSensitive": false,
+          "valueType": "string",
+          "column": "Record number",
+          "blankPosition": 2,
+          "reverse": false
+        }
+      ]
+    }
+  },
+  {
+    "op": "core/row-removal",
+    "description": "Remove rows",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": [
+        {
+          "omitError": false,
+          "expression": "facetCount(value, 'value', 'Record number') > 1",
+          "selectBlank": false,
+          "selection": [
+            {
+              "v": {
+                "v": false,
+                "l": "false"
+              }
+            }
+          ],
+          "selectError": false,
+          "invert": false,
+          "name": "Record number",
+          "omitBlank": false,
+          "type": "list",
+          "columnName": "Record number"
+        }
+      ]
+    }
+  }
+]
