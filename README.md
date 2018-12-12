@@ -1,6 +1,6 @@
 # Operations_dedup
 
-Use the scripts to run commands in OpenRefine against deduplication spreadsheets from Datamart.
+Use the scripts to run commands in OpenRefine against deduplication spreadsheets from Datamart. Compatible with OpenRefine version 2.8 or earlier.
 Choose the appropriate file based on the collections you are processing - Hatcher/Shapiro collections or Buhr collections.
 
 Instructions:
